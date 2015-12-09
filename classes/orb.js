@@ -51,7 +51,7 @@ Orb.prototype.Age = function () {
 
 Orb.prototype.FuckOrFight = function () {
     
-    var orbCount = this.GetOrbCount(25);
+    var orbCount = this.GetOrbCount(23);
     
     if (orbCount.friends == 0 && orbCount.enemies > 0) {
         this.DecreaseHealth(0.2 * orbCount.enemies);
@@ -81,6 +81,8 @@ Orb.prototype.DecreaseHealth = function (delta) {
 
 Orb.prototype.Kill = function () {
     orbLife.DeleteOrb(this.id); 
+    
+    console.log("BEEP BOOP :: ORB DEAD")
 }
 
 Orb.prototype.AnalyzeSurroundings = function()
@@ -250,9 +252,9 @@ Orb.prototype.GetOrbDistanceList = function(filter, sort)
 }
 
 Orb.prototype.GetDNAColour = function (DNAId) {
-	var red = Math.floor(100 + (DNAId / 1000 * 120) / 2);
-	var green = Math.floor(100 + DNAId / 1000 * 150);
-	var blue = Math.floor(255 - DNAId / 1000 * 240);
+	var red = Math.floor(DNAId / 1000 * 255) % 70 + 20;
+	var green = Math.floor(DNAId / 1000 * 200) % 180 + 70;
+	var blue = Math.floor(DNAId / 1000 * 100) + 20;
 	
 	return "rgb(" + red + "," + green + "," + blue + ")";
 }

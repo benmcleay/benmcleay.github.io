@@ -40,6 +40,7 @@ OrbLife.prototype.SpawnOrb = function (dna, position) {
 	
 	if (placed) {
 		this.Orbs.push(orb);
+		console.log("BEEP BOOP :: ORB BORN");
 	}
 }
 

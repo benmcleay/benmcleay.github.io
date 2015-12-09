@@ -22,6 +22,9 @@ Map.prototype.DrawOrb = function (orb) {
 	ctx.arc(orb.x, orb.y, 10, 0, Math.PI * 2);
 	ctx.fillStyle = orb.colour;
 	ctx.fill();
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = '#777';
+    ctx.stroke();
 	ctx.closePath();
 }
 

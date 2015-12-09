@@ -47,7 +47,7 @@ OrbGod.prototype.Breed = function(dna1, dna2, factor) {
 	
 	var mix = function (a, b) {
 		
-		var diff = -3 * factor + Math.floor(Math.random() * 6 * factor) + 1;
+		var diff = -6 * factor + Math.floor(Math.random() * 12 * factor) + 1;
 		
 		var average = Math.floor((a + b) / 2);
 		

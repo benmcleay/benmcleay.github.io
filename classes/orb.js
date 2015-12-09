@@ -43,8 +43,11 @@ Orb.prototype.Think = function () {
     this.Age();
 }
 
-Orb.prototype.Age = function () {
-    this.age++;
+Orb.prototype.Age = function (delta) {
+    
+    delta = delta > 0 ? delta : 1;
+    
+    this.age += delta;
     
     if (this.age > ot.constants.LIFESPAN) {
         this.Kill();
@@ -204,6 +207,8 @@ Orb.prototype.MoveTowards = function(orb, invert)
 
         this.x = newx;
         this.y = newy;
+        
+        this.Age(this.speed / 100 + 0.5);
     }
 }
 

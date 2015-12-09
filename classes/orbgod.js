@@ -34,6 +34,7 @@ OrbGod.prototype.CreateNewStrainDNA = function () {
 		strength: rnd(),
 		courage: rnd(),
 		independence: rnd(),
+		fertility: rnd(),
 		
 		dna: rnd() * 10
 	}

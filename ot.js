@@ -2,12 +2,13 @@ var ot = {
 
     constants: {
       
-        SPECIES: 10,
-        ORBS_PER_SPECIES: 3,
+        SPECIES: 5,
+        ORBS_PER_SPECIES: 15,
         INTERVAL: 10,
-		LIFESPAN: 500000,
-		FERTILITY: 0.001,
+		LIFESPAN: 50000,
+		FERTILITY: 0.0005,
 		RADIUS: 10,
+		SENSITIVITY: 150,
         DEBUG: false
 
     },

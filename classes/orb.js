@@ -1,13 +1,17 @@
 var Orb = function (DNA) {
 	
+    var dna = $.extend({}, DNA);
+    
 	this.id = orbLife.GetOrbIndex();
 	
-	this.speed = DNA.speed;
-	this.strength = DNA.strength;
-	this.courage = DNA.courage;
-	this.independence = DNA.independence;
-	
-	this.dna = DNA.dna;
+	this.speed = dna.speed;
+	this.strength = dna.strength;
+	this.courage = dna.courage;
+	this.independence = dna.independence;
+	this.fertility = dna.fertility;
+    
+    this.seed = dna;
+	this.dna = dna.dna;
 	
 	this.colour = this.GetDNAColour(this.dna);
 	
@@ -19,8 +23,6 @@ var Orb = function (DNA) {
 }
 
 Orb.prototype.Think = function () {
-	
-	var _this = this;
 
     var feeling = this.AnalyzeSurroundings();
     
@@ -56,8 +58,11 @@ Orb.prototype.FuckOrFight = function () {
     if (orbCount.friends == 0 && orbCount.enemies > 0) {
         this.DecreaseHealth(0.2 * orbCount.enemies);
     } else if (orbCount.enemies == 0 && orbCount.friends > 0) {
-        if (Math.random() < ot.constants.FERTILITY) {
-            orbLife.SpawnOrb(this.dna, {
+        if (Math.random() * (this.fertility / 100 + 0.5) < ot.constants.FERTILITY) {
+            
+            this.DecreaseHealth(50);
+            
+            orbLife.SpawnOrb(this.seed, {
                 x: this.x,
                 y: this.y
             })
@@ -88,32 +93,34 @@ Orb.prototype.Kill = function () {
 Orb.prototype.AnalyzeSurroundings = function()
 {
     var _this = this;
-
-    var distanceToOrbs = this.GetOrbDistanceList(null, "ascending");
-
-    var closeOrbs = distanceToOrbs.filter(function(distanceObj)
-    {
-        return _this.id != distanceObj.orb.id && distanceObj.distance < 150;
-    });
-
-    var total = closeOrbs.length;
-
-    var enemies = closeOrbs.filter(function(distanceObj)
-    {
-        return Math.abs(distanceObj.orb.dna - _this.dna) > 50
-    }).length;
-
-    if (total == 0 && this.courage < 80)
-    {
+    
+    var orbCount = this.GetOrbCount(ot.constants.SENSITIVITY);
+    
+    if (this.courage > 30 && orbCount.friends > 12 - Math.floor(this.courage / 10)) {
+        return "brave";
+    }
+    
+    if (orbCount.friends == 0 && orbCount.enemies == 0 && this.independence < 90) {
         return "alone";
     }
-
-    if (enemies * (this.courage / 100 + 0.5) > (total / 2))
-    {
+    
+    if (orbCount.friends > orbCount.enemies && this.courage > 10) {
+        return "brave";
+    }
+    
+    if (orbCount.friends == 0 && orbCount.enemies == 1 && this.courage > 30) {
+        return "brave";
+    }
+    
+    if (orbCount.enemies != 1 && orbCount.enemies > orbCount.friends && this.courage < 90) {
         return "scared";
     }
 
-    return "brave";
+    if (this.courage > this.independence) {
+        return "brave";
+    } else {
+        return "scared";
+    }
 }
 
 
@@ -216,7 +223,8 @@ Orb.prototype.GetOrbCount = function (distance) {
     
     return {
         friends: friendCount,
-        enemies: total - friendCount
+        enemies: total - friendCount,
+        total: total
     }
 }
 

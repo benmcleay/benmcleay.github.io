@@ -7,6 +7,7 @@ var ot = {
         INTERVAL: 10,
 		LIFESPAN: 500000,
 		FERTILITY: 0.001,
+		RADIUS: 10,
         DEBUG: false
 
     },
@@ -19,7 +20,7 @@ var ot = {
 	},
 	
 	isPointOutOfBounds: function(x, y) {
-		if (((x + 10) > 700) || ((y + 10) > 700) || ((x - 10) < 0) || ((y - 10) < 0)) {
+		if (((x + ot.constants.RADIUS) > 700) || ((y + ot.constants.RADIUS) > 700) || ((x - ot.constants.RADIUS) < 0) || ((y - ot.constants.RADIUS) < 0)) {
 			return true;
 		}
 		return false;
@@ -30,12 +31,6 @@ var ot = {
 	},
 	
 	getAngleToPoint: function (originOrb, targetOrb) {
-		var angleTrunc = function (a) {
-			while (a < 0) {
-				a += Math.PI * 2;
-			}
-			return a;
-		}
 		
 		var dx = targetOrb.x - originOrb.x;
 		var dy = targetOrb.y - originOrb.y;

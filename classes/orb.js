@@ -51,7 +51,7 @@ Orb.prototype.Age = function () {
 
 Orb.prototype.FuckOrFight = function () {
     
-    var orbCount = this.GetOrbCount(23);
+    var orbCount = this.GetOrbCount(ot.constants.RADIUS * 2 + 3);
     
     if (orbCount.friends == 0 && orbCount.enemies > 0) {
         this.DecreaseHealth(0.2 * orbCount.enemies);

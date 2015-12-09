@@ -11,6 +11,7 @@ var Orb = function (DNA) {
 	
 	this.colour = this.GetDNAColour(this.dna);
 	
+    this.age = 0;
 	this.health = 100;
 	
 	this.x = null;
@@ -36,15 +37,31 @@ Orb.prototype.Think = function () {
     {
         this.MoveToEnemy();
     }
+    
+    this.Age();
 }
 
+Orb.prototype.Age = function () {
+    this.age++;
+    
+    if (this.age > ot.constants.LIFESPAN) {
+        this.Kill();
+    }  
+};
+
 Orb.prototype.FuckOrFight = function () {
-    var _this = this;
     
     var orbCount = this.GetOrbCount(25);
     
     if (orbCount.friends == 0 && orbCount.enemies > 0) {
         this.DecreaseHealth(0.2 * orbCount.enemies);
+    } else if (orbCount.enemies == 0 && orbCount.friends > 0) {
+        if (Math.random() < ot.constants.FERTILITY) {
+            orbLife.SpawnOrb(this.dna, {
+                x: this.x,
+                y: this.y
+            })
+        }
     }
 }
 

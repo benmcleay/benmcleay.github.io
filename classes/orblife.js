@@ -19,18 +19,59 @@ OrbLife.prototype.SetUp = function () {
 
 	for (var i = 0; i < orbs.length; i++) {
 		var orb = orbs[i];
-		var x, y
-		do {
-            x = 20 + Math.floor(Math.random()*660);
-            y = 20 + Math.floor(Math.random()*660);
-		} while (this.CheckPlaceOccupied(x, y) === true);
 		
-		orb.x = x;
-		orb.y = y;
+		this.PlaceOrb(orb);
 		
 		this.Orbs.push(orb);
 	}
 };
+
+OrbLife.prototype.SpawnOrb = function (dna, position) {
+	
+	var box = {
+		x: position.x - 30,
+		y: position.y - 30,
+		size: 60
+	};
+	
+	var orb = this.OrbGod.CreateOrb(dna);
+	
+	var placed = this.PlaceOrb(orb, box);
+	
+	if (placed) {
+		this.Orbs.push(orb);
+	}
+}
+
+OrbLife.prototype.PlaceOrb = function (orb, box) {
+	var x, y;
+	
+	if (!box) {
+		box = {
+			x: 20,
+			y: 20,
+			size: 660
+		}
+	}
+	
+	var count = 0;
+	
+	do {
+		x = box.x + Math.floor(Math.random() * box.size);
+		y = box.y + Math.floor(Math.random() * box.size);
+		
+		count++;
+	} while (count < 20 && (this.CheckPlaceOccupied(x, y) === true || ot.isPointOutOfBounds(x, y)));
+	
+	if (count == 20) {
+		return false
+	}
+	
+	orb.x = x;
+	orb.y = y;
+	
+	return true;
+}
 
 OrbLife.prototype.GetOrb = function (id) {
 	var matchingOrbs = this.Orbs.filter(function (orb) {

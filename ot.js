@@ -5,6 +5,8 @@ var ot = {
         SPECIES: 10,
         ORBS_PER_SPECIES: 3,
         INTERVAL: 10,
+		LIFESPAN: 500000,
+		FERTILITY: 0.0005,
         DEBUG: false
 
     },

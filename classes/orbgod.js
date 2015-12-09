@@ -41,11 +41,11 @@ OrbGod.prototype.CreateNewStrainDNA = function () {
 	
 }
 
-OrbGod.prototype.Breed = function(dna1, dna2, factor) {
+OrbGod.prototype.Breed = function(dna1, dna2) {
 	
-	factor = !factor ? 1 : factor;
-	
-	var mix = function (a, b) {
+	var mix = function (a, b, factor) {
+		
+		factor = !factor ? 1 : factor;
 		
 		var diff = -6 * factor + Math.floor(Math.random() * 12 * factor) + 1;
 		
@@ -65,6 +65,6 @@ OrbGod.prototype.Breed = function(dna1, dna2, factor) {
 		independence: mix(dna1.independence, dna2.independence),
 		fertility: mix(dna1.fertility, dna2.fertility),
 		
-		dna: mix(dna1.courage, dna2.courage, 10),
+		dna: mix(dna1.dna, dna2.dna, 10),
 	}
 }

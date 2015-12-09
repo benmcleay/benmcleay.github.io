@@ -100,6 +100,11 @@ Orb.prototype.AnalyzeSurroundings = function()
     var _this = this;
     
     var orbCount = this.GetOrbCount(ot.constants.SENSITIVITY);
+    var orbCountMap = this.GetOrbCount(9999);
+    
+    if (orbCountMap.friends == 1) {
+        return "alone";
+    }
     
     if (this.courage > 30 && orbCount.friends > 12 - Math.floor(this.courage / 10)) {
         return "brave";

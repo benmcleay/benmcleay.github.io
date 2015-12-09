@@ -100,7 +100,7 @@ Orb.prototype.AnalyzeSurroundings = function()
     var _this = this;
     
     var orbCount = this.GetOrbCount(ot.constants.SENSITIVITY);
-    var orbCountMap = this.GetOrbCount(9999);
+    var orbCountMap = this.GetOrbCount(500 * (0.5 + this.independence / 100));
     
     if (orbCountMap.friends == 1) {
         return "alone";

@@ -26,13 +26,17 @@ OrbLife.prototype.SetUp = function () {
 	}
 };
 
-OrbLife.prototype.SpawnOrb = function (dna, position) {
+OrbLife.prototype.SpawnOrb = function (dna, mateDna, position) {
 	
 	var box = {
-		x: position.x - 30,
-		y: position.y - 30,
-		size: 60
+		x: position.x - 25,
+		y: position.y - 25,
+		size: 50
 	};
+	
+	if (mateDna) {
+		dna = this.OrbGod.Breed(dna, mateDna);
+	}
 	
 	var orb = this.OrbGod.CreateOrb(dna);
 	

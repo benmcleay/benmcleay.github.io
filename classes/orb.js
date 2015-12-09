@@ -62,7 +62,9 @@ Orb.prototype.FuckOrFight = function () {
             
             this.DecreaseHealth(50);
             
-            orbLife.SpawnOrb(this.seed, {
+            var closestFriend = this.GetClosestFriend();
+            
+            orbLife.SpawnOrb(this.seed, closestFriend.seed, {
                 x: this.x,
                 y: this.y
             })
@@ -257,6 +259,16 @@ Orb.prototype.GetOrbDistanceList = function(filter, sort)
     }
 
     return list;
+}
+
+Orb.prototype.GetClosestFriend = function () {
+    var _this = this;
+    
+    var distanceList = this.GetOrbDistanceList(function (orb) {
+       return ot.sameDnaCheck(orb, _this);
+    }, "ascending");
+    
+    return distanceList[0] ? distanceList[0].orb : null;
 }
 
 Orb.prototype.GetDNAColour = function (DNAId) {

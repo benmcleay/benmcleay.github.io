@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+    	<title>Orb Life</title>
+		<link rel="stylesheet" type="text/css" href="orblife.css" />
+		<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="ot.js"></script>
+		<script type="text/javascript" src="classes/orblife.js"></script>
+		<script type="text/javascript" src="classes/map.js"></script>
+		<script type="text/javascript" src="classes/orb.js?cachebust=fuuuuckyooouu"></script>
+		<script type="text/javascript" src="classes/orbgod.js"></script>
+	</head>
+	
+	<body>
+		<canvas height="700" width="700" id="gameArea"></canvas>
+	</body>
+	
+	<script>
+		
+		var orbLife = new OrbLife();
+		
+		orbLife.SetUp();
+		
+		orbLife.Initiate();
+		
+	</script>
+</html>

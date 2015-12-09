@@ -53,7 +53,7 @@ OrbGod.prototype.Breed = function(dna1, dna2, factor) {
 		
 		var newValue = average + diff;
 		
-		if (newValue > 100 * factor) return 100 * factor;
+		if (newValue > (100 * factor)) return 100 * factor;
 		if (newValue < 1) return 1;
 		return newValue;
 	}

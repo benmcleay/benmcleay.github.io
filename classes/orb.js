@@ -28,8 +28,7 @@ Orb.prototype.Think = function () {
     
     this.FuckOrFight();
     
-    if (feeling == "alone")
-    {
+    if (feeling == "alone") {
         this.MoveToFriend();
     }
     if (feeling == "scared") {
@@ -110,8 +109,7 @@ Orb.prototype.Kill = function ()
             return !ot.sameDnaCheck(orb, _this);
         }, "ascending");
 
-    for (var i = 0; i < murderers.length; i++)
-    {
+    for (var i = 0; i < murderers.length; i++) {
         var murderer = murderers[i];
 
         if (murderer.distance < ot.constants.RADIUS * 2 + 3) {
@@ -129,7 +127,7 @@ Orb.prototype.AnalyzeSurroundings = function()
     var orbCount = this.GetOrbCount(ot.constants.SENSITIVITY);
     var orbCountMap = this.GetOrbCount(500 * (0.5 + this.independence / 100));
     
-    if (this.hunger > ot.constants.HUNGER_THRESHOLD * 0.8 || (this.hunger > ot.constants.HUNGER_THRESHOLD * 0.6 && this.courage> 60))
+    if (this.hunger > ot.constants.HUNGER_THRESHOLD * 0.8 || (this.hunger > ot.constants.HUNGER_THRESHOLD * 0.6 && orbCount.friends > 6 - Math.floor(this.courage / 10)))
     {
         return "brave";
     }

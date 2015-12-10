@@ -9,7 +9,7 @@ var ot = {
 		FERTILITY: 0.0005,
 		RADIUS: 10,
 		SENSITIVITY: 150,
-        HUNGER_THRESHOLD: 5000,
+        HUNGER_THRESHOLD: 8000,
         DEBUG: false
 
     },

@@ -312,5 +312,5 @@ Orb.prototype.GetDNAColour = function ()
 {
     var saturation = 80 - (this.hunger / ot.constants.HUNGER_THRESHOLD) * 60;
 
-	return "hsl(" + Math.floor(this.dna / 1000 * 255) + "," + saturation + "%,50%)";
+	return "hsl(" + Math.floor(this.dna / 1000 * 360) + "," + saturation + "%,50%)";
 }

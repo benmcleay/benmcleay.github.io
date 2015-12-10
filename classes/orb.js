@@ -39,7 +39,6 @@ Orb.prototype.Think = function () {
     {
         this.MoveToEnemy();
     }
-    
     this.Age();
     this.IncreaseHunger();
 }
@@ -162,7 +161,7 @@ Orb.prototype.AnalyzeSurroundings = function()
     if (this.courage > this.independence) {
         return "brave";
     } else {
-        return "scared";
+        return "neutral";
     }
 }
 

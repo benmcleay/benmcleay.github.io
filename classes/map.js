@@ -29,6 +29,10 @@ Map.prototype.DrawOrb = function (orb) {
 }
 
 Map.prototype.DrawOrbs = function (orbs) {
+    if (orbs.length == 0) {
+        document.location.reload();
+    }
+
 	for (var i = 0; i < orbs.length; i++) {
 		this.DrawOrb(orbs[i]);
 	}

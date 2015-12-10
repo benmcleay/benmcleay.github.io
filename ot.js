@@ -1,9 +1,11 @@
+var species = Math.floor(Math.random() * 10 + 2);
+
 var ot = {
 
     constants: {
       
-        SPECIES: 5,
-        ORBS_PER_SPECIES: 15,
+        SPECIES: species,
+        ORBS_PER_SPECIES: Math.floor(100 / species),
         INTERVAL: 10,
 		LIFESPAN: 100000,
 		FERTILITY: 0.0005,

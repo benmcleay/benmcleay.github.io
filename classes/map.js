@@ -20,7 +20,7 @@ Map.prototype.DrawOrb = function (orb) {
 	
 	ctx.beginPath();
 	ctx.arc(orb.x, orb.y, ot.constants.RADIUS, 0, Math.PI * 2);
-	ctx.fillStyle = orb.colour;
+	ctx.fillStyle = orb.GetDNAColour();
 	ctx.fill();
 	ctx.lineWidth = 1;
 	ctx.strokeStyle = '#777';

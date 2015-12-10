@@ -10,12 +10,10 @@ var Orb = function (DNA) {
 	this.independence = dna.independence;
 	this.fertility = dna.fertility;
 
-    this.hunger = 0;
+    this.hunger = Math.floor(Math.random() * ot.constants.HUNGER_THRESHOLD * 2 /5);
 
     this.seed = dna;
 	this.dna = dna.dna;
-	
-	this.colour = this.GetDNAColour(this.dna);
 	
     this.age = 0;
 	this.health = 100;
@@ -117,9 +115,8 @@ Orb.prototype.Kill = function ()
     {
         var murderer = murderers[i];
 
-        if (murderer.distance < ot.constants.RADIUS * 2 + 3)
-        {
-            murderer.orb.hunger -= 1000;
+        if (murderer.distance < ot.constants.RADIUS * 2 + 3) {
+            murderer.orb.hunger -= ot.constants.HUNGER_THRESHOLD / 10;
         }
     }
 
@@ -314,6 +311,9 @@ Orb.prototype.GetClosestFriend = function () {
     return distanceList[0] ? distanceList[0].orb : null;
 }
 
-Orb.prototype.GetDNAColour = function (DNAId) {
-	return "hsl(" + Math.floor(Math.random() * DNAId / 1000 * 255) + ",70%,50%)";
+Orb.prototype.GetDNAColour = function ()
+{
+    var saturation = 80 - (this.hunger / ot.constants.HUNGER_THRESHOLD) * 60;
+
+	return "hsl(" + Math.floor(this.dna / 1000 * 255) + "," + saturation + "%,50%)";
 }

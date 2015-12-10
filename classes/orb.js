@@ -9,7 +9,9 @@ var Orb = function (DNA) {
 	this.courage = dna.courage;
 	this.independence = dna.independence;
 	this.fertility = dna.fertility;
-    
+
+    this.hunger = 0;
+
     this.seed = dna;
 	this.dna = dna.dna;
 	
@@ -41,6 +43,7 @@ Orb.prototype.Think = function () {
     }
     
     this.Age();
+    this.IncreaseHunger();
 }
 
 Orb.prototype.Age = function (delta) {
@@ -75,6 +78,17 @@ Orb.prototype.FuckOrFight = function () {
     }
 }
 
+Orb.prototype.IncreaseHunger = function(delta)
+{
+    var delta = delta > 0 ? delta : 1;
+
+    if (this.hunger < ot.constants.HUNGER_THRESHOLD) {
+        this.hunger += delta;
+    } else {
+        this.Kill();
+    }
+}
+
 Orb.prototype.IncreaseHealth = function (delta) {
     if (this.health < 100) {
         this.health += delta;
@@ -89,9 +103,26 @@ Orb.prototype.DecreaseHealth = function (delta) {
     }
 }
 
-Orb.prototype.Kill = function () {
-    orbLife.DeleteOrb(this.id); 
-    
+Orb.prototype.Kill = function ()
+{
+    var _this = this;
+
+    orbLife.DeleteOrb(this.id);
+
+    var murderers = this.GetOrbDistanceList(function(orb) {
+            return !ot.sameDnaCheck(orb, _this);
+        }, "ascending");
+
+    for (var i = 0; i < murderers.length; i++)
+    {
+        var murderer = murderers[i];
+
+        if (murderer.distance < ot.constants.RADIUS * 2 + 3)
+        {
+            murderer.orb.hunger -= 1000;
+        }
+    }
+
     console.log("BEEP BOOP :: ORB DEAD")
 }
 
@@ -102,6 +133,11 @@ Orb.prototype.AnalyzeSurroundings = function()
     var orbCount = this.GetOrbCount(ot.constants.SENSITIVITY);
     var orbCountMap = this.GetOrbCount(500 * (0.5 + this.independence / 100));
     
+    if (this.hunger > ot.constants.HUNGER_THRESHOLD * 0.8 || (this.hunger > ot.constants.HUNGER_THRESHOLD * 0.6 && this.courage> 60))
+    {
+        return "brave";
+    }
+
     if (orbCountMap.friends == 1) {
         return "alone";
     }
@@ -154,14 +190,11 @@ Orb.prototype.MoveTo = function(type, invert)
     var filter,
         _this = this;
 
-    if (type == "friend")
-    {
+    if (type == "friend") {
         filter = function (orb) {
             return _this.id != orb.id && Math.abs(orb.dna - _this.dna) < 50;
         }
-    }
-    else if (type == "enemy")
-    {
+    } else if (type == "enemy") {
         filter = filter = function (orb) {
             return _this.id != orb.id && Math.abs(orb.dna - _this.dna) > 50;
         }
@@ -199,14 +232,14 @@ Orb.prototype.MoveTowards = function(orb, invert)
 
     // try move towards until no overlap
     do {
-        if (count > 0) angle += 60;
+        if (count > 0) angle += 60 * (count % 2 == 1 ? 1 : -1) * count;
 
         vector = ot.getDxDyAlongAngle(angle);
         newx = this.x + speedFactor(vector[0]);
         newy = this.y + speedFactor(vector[1]);
 
         count++;
-    } while (count < 7 && (orbLife.CheckPlaceOccupied(newx, newy, this.id) || ot.isPointOutOfBounds(newx, newy)))
+    } while (count < 7 && (ot.isPointOutOfBounds(newx, newy) || orbLife.CheckPlaceOccupied(newx, newy, this.id)))
 
     if (newx && newy && count < 7) {
 

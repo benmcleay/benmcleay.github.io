@@ -128,9 +128,6 @@ OrbLife.prototype.Initiate = function () {
 };
 
 OrbLife.prototype.Tick = function () {
-	
-	// smarts
-	
 	this.Map.Clear();
 	this.Map.DrawOrbs(this.Orbs);
 };

@@ -282,9 +282,5 @@ Orb.prototype.GetClosestFriend = function () {
 }
 
 Orb.prototype.GetDNAColour = function (DNAId) {
-	var red = Math.floor(DNAId / 1000 * 255) % 70 + 20;
-	var green = Math.floor(DNAId / 1000 * 200) % 180 + 70;
-	var blue = Math.floor(DNAId / 1000 * 100) + 20;
-	
-	return "rgb(" + red + "," + green + "," + blue + ")";
+	return "hsl(" + Math.floor(Math.random() * DNAId / 1000 * 255) + ",70%,50%)";
 }

@@ -24,12 +24,14 @@ Map.prototype.DrawOrb = function (orb) {
 		return;
 	}
 	
+	var colour = orb.GetDNAColour();
+	
 	ctx.beginPath();
 	ctx.arc(orb.x, orb.y, ot.constants.RADIUS, 0, Math.PI * 2);
-	ctx.fillStyle = orb.GetDNAColour();
+	ctx.fillStyle = colour.fill;
 	ctx.fill();
 	ctx.lineWidth = 1;
-	ctx.strokeStyle = '#777';
+	ctx.strokeStyle = colour.stroke;
     ctx.stroke();
 	ctx.closePath();
 }

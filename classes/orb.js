@@ -114,6 +114,8 @@ Orb.prototype.Kill = function ()
 
         if (murderer.distance < ot.constants.RADIUS * 2 + 3) {
             murderer.orb.hunger -= ot.constants.HUNGER_THRESHOLD / 10;
+        } else {
+            continue;
         }
     }
 
@@ -310,7 +312,10 @@ Orb.prototype.GetClosestFriend = function () {
 
 Orb.prototype.GetDNAColour = function ()
 {
-    var saturation = 80 - (this.hunger / ot.constants.HUNGER_THRESHOLD) * 60;
-
-	return "hsl(" + Math.floor(this.dna / 1000 * 360) + "," + saturation + "%,50%)";
+    var hunger = Math.floor(255 - (this.hunger / ot.constants.HUNGER_THRESHOLD) * 255);
+    
+    return {
+        fill: "hsl(" + Math.floor(this.dna / 1000 * 360) + ",100%,50%)",
+        stroke: "rgb(" + hunger + "," + hunger + "," + hunger + ")"
+    }
 }

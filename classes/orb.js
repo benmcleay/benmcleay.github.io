@@ -285,13 +285,13 @@ Orb.prototype.GetOrbDistanceList = function(filter, sort)
 
     if (sort == "ascending") {
         return list.sort(function(a, b) {
-            return b.distance - a.distance;
+            return a.distance - b.distance;
         });
     }
     if (sort == "descending")
     {
         return list.sort(function (a, b) {
-            return a.distance - b.distance;
+            return b.distance - a.distance;
         });
     }
 

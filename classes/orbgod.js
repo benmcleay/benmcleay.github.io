@@ -46,14 +46,16 @@ OrbGod.prototype.Breed = function(dna1, dna2) {
 	var mix = function (a, b, factor) {
 		
 		factor = !factor ? 1 : factor;
-
+		
+		var mutate = Math.random() > 0.5;
+		
 	    var takeA = Math.random() > 0.5;
 
-		var diff = -4 * factor + Math.floor(Math.random() * 8 * factor) + 1;
+		var diff = -4 * factor + ot.rnd(0, 8) * factor + 1;
 
 	    var value = takeA ? a : b;
 		
-	    var newValue = value + diff;
+	    var newValue = mutate ? value + diff : value;;
 		
 		if (newValue > (100 * factor)) return 100 * factor;
 		if (newValue < 1) return 1;

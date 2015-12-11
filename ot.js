@@ -50,6 +50,10 @@ var ot = {
 	
 	sameDnaCheck: function (a, b) {
 		return Math.abs(a.dna - b.dna) < 50
+	},
+	
+	rnd: function (a, b) {
+		return Math.floor(Math.random() * (b - a + 1)) + a;
 	}
 };
 

@@ -28,3 +28,12 @@ Brain.prototype.EvaluateRule = function (rule) {
 Brain.prototype.ExecuteInstruction = function (instruction) {
 	
 }
+
+Brain.prototype.Mutate = function () {
+	// fuck em up
+	return this.rules;
+}
+
+Brain.prototype.InventRule = function () {
+	
+}

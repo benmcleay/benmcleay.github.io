@@ -12,8 +12,27 @@ var ot = {
 		RADIUS: 10,
 		SENSITIVITY: 150,
         HUNGER_THRESHOLD: 8000,
-        DEBUG: false
-
+        DEBUG: false,
+		
+		instructionTypes: {
+			MOVE_TO_FRIEND: 0,
+			MOVE_TO_ENEMY: 1,
+			FLEE: 3
+		},
+		
+		conditionTypes: {
+			PROXIMITY: 0,
+			ATTRIBUTE: 1,
+			HUNGER: 2,
+			AGE: 3,
+			HEALTH: 4
+		},
+		
+		testTypes: {
+			LESS_THAN: 0,
+			GREATER_THAN: 1,
+			EQUAL_TO: 2
+		}
     },
 
 	detectOrbCollision: function (x1, y1, x2, y2, radius) {

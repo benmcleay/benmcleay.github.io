@@ -60,7 +60,7 @@ Orb.prototype.FuckOrFight = function () {
     if (orbCount.friends == 0 && orbCount.enemies > 0) {
         this.DecreaseHealth(0.2 * orbCount.enemies);
     } else if (orbCount.enemies == 0 && orbCount.friends > 0) {
-        if (Math.random() * (this.fertility / 100 + 0.5) < ot.constants.FERTILITY) {
+        if (Math.random() * (ot.statAsPercentage(this.fertility) + 0.5) < ot.constants.FERTILITY) {
             
             this.DecreaseHealth(50);
             
@@ -127,9 +127,9 @@ Orb.prototype.AnalyzeSurroundings = function()
     var _this = this;
     
     var orbCount = this.GetOrbCount(ot.constants.SENSITIVITY);
-    var orbCountMap = this.GetOrbCount(500 * (0.5 + this.independence / 100));
+    var orbCountMap = this.GetOrbCount(500 * (0.5 + ot.statAsPercentage(this.independence)));
     
-    if (this.hunger > ot.constants.HUNGER_THRESHOLD * 0.8 || (this.hunger > ot.constants.HUNGER_THRESHOLD * 0.6 && orbCount.friends > 6 - Math.floor(this.courage / 10)))
+    if (this.hunger > ot.constants.HUNGER_THRESHOLD * 0.6 || (this.hunger > ot.constants.HUNGER_THRESHOLD * 0.8 && orbCount.friends > 6 - Math.floor(this.courage / 100)))
     {
         return "brave";
     }
@@ -138,23 +138,23 @@ Orb.prototype.AnalyzeSurroundings = function()
         return "alone";
     }
     
-    if (this.courage > 30 && orbCount.friends > 12 - Math.floor(this.courage / 10)) {
+    if (this.courage > 300 && orbCount.friends > 12 - Math.floor(this.courage / 100)) {
         return "brave";
     }
     
-    if (orbCount.friends == 0 && orbCount.enemies == 0 && this.independence < 90) {
+    if (orbCount.friends == 0 && orbCount.enemies == 0 && this.independence < 900) {
         return "alone";
     }
     
-    if (orbCount.friends > orbCount.enemies && this.courage > 10) {
+    if (orbCount.friends > orbCount.enemies && this.courage > 100) {
         return "brave";
     }
     
-    if (orbCount.friends == 0 && orbCount.enemies == 1 && this.courage > 30) {
+    if (orbCount.friends == 0 && orbCount.enemies == 1 && this.courage > 300) {
         return "brave";
     }
     
-    if (orbCount.enemies != 1 && orbCount.enemies > orbCount.friends && this.courage < 90) {
+    if (orbCount.enemies != 1 && orbCount.enemies > orbCount.friends && this.courage < 900) {
         return "scared";
     }
 
@@ -199,10 +199,10 @@ Orb.prototype.MoveTo = function(type, invert)
     var distanceToOrbs = this.GetOrbDistanceList(filter);
 
     distanceToOrbs = distanceToOrbs.sort(function (a, b) {
-        return b.distance - a.distance;
+        return a.distance - b.distance;
     });
 
-    if (!distanceToOrbs[0] || distanceToOrbs[0].distance < distanceToOrbs[0].orb.independence) return;
+    if (!distanceToOrbs[0] || (type == "friend" && distanceToOrbs[0].distance < distanceToOrbs[0].orb.independence / 20)) return;
 
     var target = distanceToOrbs[0].orb;
 
@@ -223,7 +223,7 @@ Orb.prototype.MoveTowards = function(orb, invert)
 
     var speedFactor = function(distance)
     {
-        return distance * (_this.speed / 100 + 0.5)
+        return distance * (ot.statAsPercentage(_this.speed) + 0.5)
     }
 
     // try move towards until no overlap
@@ -242,7 +242,7 @@ Orb.prototype.MoveTowards = function(orb, invert)
         this.x = newx;
         this.y = newy;
         
-        this.Age(this.speed / 100 + 0.5);
+        this.Age(ot.statAsPercentage(this.speed) + 0.5);
     }
 }
 

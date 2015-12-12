@@ -73,6 +73,10 @@ var ot = {
 	
 	rnd: function (a, b) {
 		return Math.floor(Math.random() * (b - a + 1)) + a;
+	},
+	
+	statAsPercentage: function (stat) {
+		return stat / 1000;
 	}
 };
 
